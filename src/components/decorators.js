@@ -49,10 +49,11 @@ Header.propTypes = {
 @Radium
 class Container extends React.Component {
     render() {
-        const {style, decorators, terminal, onClick, node} = this.props;
+        const {style, decorators, terminal, onClick, node } = this.props;
 
         return (
             <div onClick={onClick}
+                 onContextMenu={this.onContextMenu}
                  ref={ref => this.clickableRef = ref}
                  style={style.container}>
                 {!terminal ? this.renderToggle() : null}
@@ -62,6 +63,11 @@ class Container extends React.Component {
             </div>
         );
     }
+
+    onContextMenu=(e)=>{
+        const { onContextMenu, node } = this.props;
+        onContextMenu(e, node);
+    };
 
     renderToggle() {
         const {animations} = this.props;
@@ -90,6 +96,7 @@ Container.propTypes = {
     decorators: PropTypes.object.isRequired,
     terminal: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired,
+    onContextMenu: PropTypes.func.isRequired,
     animations: PropTypes.oneOfType([
         PropTypes.object,
         PropTypes.bool

@@ -44,6 +44,16 @@ class TreeNode extends React.Component {
         return Object.assign({}, decorators, nodeDecorators);
     }
 
+    onContextMenu=(e, node)=>{
+        const { onContextMenu } = this.props;
+        if(!!onContextMenu){
+            e.preventDefault();
+            e.stopPropagation();
+            onContextMenu(e, node);
+        }
+        return false;
+    };
+
     render() {
         const {style} = this.props;
         const decorators = this.decorators();
@@ -83,6 +93,7 @@ class TreeNode extends React.Component {
         return (
             <NodeHeader animations={animations}
                         decorators={decorators}
+                        onContextMenu={this.onContextMenu}
                         node={Object.assign({}, node)}
                         onClick={this.onClick}
                         style={style}/>
@@ -90,7 +101,7 @@ class TreeNode extends React.Component {
     }
 
     renderChildren(decorators) {
-        const {animations, decorators: propDecorators, node, style} = this.props;
+        const {animations, decorators: propDecorators, node, style, onContextMenu} = this.props;
 
         if (node.loading) {
             return this.renderLoading(decorators);
@@ -106,6 +117,7 @@ class TreeNode extends React.Component {
                 ref={ref => this.subtreeRef = ref}>
                 {children.map((child, index) => <TreeNode {...this._eventBubbles()}
                                                           animations={animations}
+                                                          onContextMenu={onContextMenu}
                                                           decorators={propDecorators}
                                                           key={child.id || index}
                                                           node={child}
@@ -144,7 +156,8 @@ TreeNode.propTypes = {
         PropTypes.object,
         PropTypes.bool
     ]).isRequired,
-    onToggle: PropTypes.func
+    onToggle: PropTypes.func,
+    onContextMenu: PropTypes.func
 };
 
 export default TreeNode;
