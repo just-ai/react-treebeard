@@ -13,12 +13,12 @@ class TreeNode extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
 
-    onClick() {
+    onClick(e) {
         const {node, onToggle} = this.props;
         const {toggled} = node;
 
         if (onToggle) {
-            onToggle(node, !toggled);
+            onToggle(node, !toggled, e);
         }
     }
 
