@@ -26,10 +26,17 @@ class NodeHeader extends React.Component {
     }
 
     render() {
-        const {animations, decorators, node, onClick, style, onContextMenu} = this.props;
+        const {
+            animations, decorators, node, onClick, style, onContextMenu,
+            handleStart, handleDrag, handleStop, onMouseOver, onMouseOut, highlighted, targeted
+        } = this.props;
         const {active, children} = node;
         const terminal = !children;
-        const container = [style.link, active ? style.activeLink : null];
+        const container = [
+            style.link,
+            active ? style.activeLink : null,
+            highlighted ? style.highlightedLink : null, ,
+            targeted ? style.targetedLink : null];
         const headerStyles = Object.assign({container}, style);
 
         return (
@@ -38,6 +45,12 @@ class NodeHeader extends React.Component {
                                   onContextMenu={onContextMenu}
                                   node={node}
                                   onClick={onClick}
+                                  highlighted={highlighted}
+                                  handleStart={handleStart}
+                                  handleDrag={handleDrag}
+                                  handleStop={handleStop}
+                                  onMouseOver={onMouseOver}
+                                  onMouseOut={onMouseOut}
                                   style={headerStyles}
                                   terminal={terminal}/>
         );
