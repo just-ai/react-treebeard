@@ -54,7 +54,7 @@ class Container extends React.Component {
 
         return (
             <Draggable
-                axis="y"
+                axis="none"
                 handle=".draggable"
                 position={{x: 0, y: 0}}
                 bounds=".treebeard"
