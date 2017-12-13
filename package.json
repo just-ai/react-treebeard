@@ -1,37 +1,75 @@
 {
-  "name": "react-treebeard",
-  "version": "2.1.0",
-  "description": "React Tree View Component",
-  "main": "index.js",
-  "scripts": {
-    "prepublish": "npm run lib",
-    "lib": "npm run babel",
-    "babel": "rimraf lib && babel src/ -d lib/",
-    "test": "karma start karma.conf.js",
-    "test-travis": "karma start --browsers Firefox --single-run",
-    "example": "webpack-dev-server --content-base ./example/ --config ./example/webpack.config.js"
-  },
-  "peerDependencies": {
-    "react": "^15.5.4 || ^16.0.0",
-    "react-dom": "^15.5.4 || ^16.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexcurtis/react-treebeard.git"
-  },
-  "keywords": [
-    "react",
-    "treeview",
-    "data-driven",
-    "customisable",
-    "fast"
+  "_args": [
+    [
+      {
+        "raw": "react-treebeard@github:ilyakarev/react-treebeard",
+        "scope": null,
+        "escapedName": "react-treebeard",
+        "name": "react-treebeard",
+        "rawSpec": "github:ilyakarev/react-treebeard",
+        "spec": "github:ilyakarev/react-treebeard",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:ilyakarev/react-treebeard.git",
+          "sshUrl": "git+ssh://git@github.com/ilyakarev/react-treebeard.git",
+          "httpsUrl": "git+https://github.com/ilyakarev/react-treebeard.git",
+          "gitUrl": "git://github.com/ilyakarev/react-treebeard.git",
+          "shortcut": "github:ilyakarev/react-treebeard",
+          "directUrl": "https://raw.githubusercontent.com/ilyakarev/react-treebeard/master/package.json"
+        }
+      },
+      "D:\\PROJECTS\\ucb-info-proxy\\src\\main\\web"
+    ]
   ],
-  "author": "Alex Curtis",
-  "license": "MIT",
+  "_from": "ilyakarev/react-treebeard",
+  "_id": "react-treebeard@2.1.0",
+  "_inCache": true,
+  "_location": "/react-treebeard",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-treebeard@github:ilyakarev/react-treebeard",
+    "scope": null,
+    "escapedName": "react-treebeard",
+    "name": "react-treebeard",
+    "rawSpec": "github:ilyakarev/react-treebeard",
+    "spec": "github:ilyakarev/react-treebeard",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:ilyakarev/react-treebeard.git",
+      "sshUrl": "git+ssh://git@github.com/ilyakarev/react-treebeard.git",
+      "httpsUrl": "git+https://github.com/ilyakarev/react-treebeard.git",
+      "gitUrl": "git://github.com/ilyakarev/react-treebeard.git",
+      "shortcut": "github:ilyakarev/react-treebeard",
+      "directUrl": "https://raw.githubusercontent.com/ilyakarev/react-treebeard/master/package.json"
+    }
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git://github.com/ilyakarev/react-treebeard.git#faa8d62798f8eba30bc13a27164fd47f8551c54c",
+  "_shasum": "347ec72a352cdf02a7aa381e857d6430c452f1c2",
+  "_shrinkwrap": null,
+  "_spec": "react-treebeard@github:ilyakarev/react-treebeard",
+  "_where": "D:\\PROJECTS\\ucb-info-proxy\\src\\main\\web",
+  "author": {
+    "name": "Alex Curtis"
+  },
   "bugs": {
     "url": "https://github.com/alexcurtis/react-treebeard/issues"
   },
-  "homepage": "https://github.com/alexcurtis/react-treebeard#readme",
+  "dependencies": {
+    "babel-runtime": "^6.23.0",
+    "deep-equal": "^1.0.1",
+    "lodash": "^4.17.4",
+    "prop-types": "^15.5.8",
+    "radium": "^0.19.0",
+    "react-draggable": "^3.0.4",
+    "shallowequal": "^0.2.2",
+    "velocity-react": "^1.3.1"
+  },
+  "description": "React Tree View Component",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
@@ -69,17 +107,41 @@
     "react-dom": "^15.5.4",
     "react-hot-loader": "^1.3.0",
     "rimraf": "^2.4.4",
-    "sinon": "uberVU/Sinon.JS.git",
+    "sinon": "github:ubervu/Sinon.JS",
     "sinon-chai": "^2.8.0",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.5.1"
   },
-  "dependencies": {
-    "babel-runtime": "^6.23.0",
-    "deep-equal": "^1.0.1",
-    "prop-types": "^15.5.8",
-    "radium": "^0.19.0",
-    "shallowequal": "^0.2.2",
-    "velocity-react": "^1.3.1"
-  }
+  "gitHead": "faa8d62798f8eba30bc13a27164fd47f8551c54c",
+  "homepage": "https://github.com/alexcurtis/react-treebeard#readme",
+  "keywords": [
+    "react",
+    "treeview",
+    "data-driven",
+    "customisable",
+    "fast"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "react-treebeard",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "react": "^15.5.4 || ^16.0.0",
+    "react-dom": "^15.5.4 || ^16.0.0"
+  },
+  "readme": "# react-treebeard\r\n\r\n[![Build Status](https://travis-ci.org/alexcurtis/react-treebeard.svg?branch=master)](https://travis-ci.org/alexcurtis/react-treebeard) [![Coverage Status](https://coveralls.io/repos/alexcurtis/react-treebeard/badge.svg?branch=master&service=github)](https://coveralls.io/github/alexcurtis/react-treebeard?branch=master)\r\n\r\nReact Tree View Component. Data-Driven, Fast, Efficient and Customisable.\r\n\r\n### Install\r\n\r\n```\r\nnpm install react-treebeard --save\r\n```\r\n\r\n### [Example](http://alexcurtis.github.io/react-treebeard/)\r\n\r\nAn online example from the `/example` directory can be found here: [Here](http://alexcurtis.github.io/react-treebeard/)\r\n\r\n### Quick Start\r\n```javascript\r\n'use strict';\r\n\r\nimport React from 'react';\r\nimport ReactDOM from 'react-dom';\r\nimport {Treebeard} from 'react-treebeard';\r\n\r\nconst data = {\r\n    name: 'root',\r\n    toggled: true,\r\n    children: [\r\n        {\r\n            name: 'parent',\r\n            children: [\r\n                { name: 'child1' },\r\n                { name: 'child2' }\r\n            ]\r\n        },\r\n        {\r\n            name: 'loading parent',\r\n            loading: true,\r\n            children: []\r\n        },\r\n        {\r\n            name: 'parent',\r\n            children: [\r\n                {\r\n                    name: 'nested parent',\r\n                    children: [\r\n                        { name: 'nested child 1' },\r\n                        { name: 'nested child 2' }\r\n                    ]\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n};\r\n\r\nclass TreeExample extends React.Component {\r\n    constructor(props){\r\n        super(props);\r\n        this.state = {};\r\n        this.onToggle = this.onToggle.bind(this);\r\n    }\r\n    onToggle(node, toggled){\r\n        if(this.state.cursor){this.state.cursor.active = false;}\r\n        node.active = true;\r\n        if(node.children){ node.toggled = toggled; }\r\n        this.setState({ cursor: node });\r\n    }\r\n    render(){\r\n        return (\r\n            <Treebeard\r\n                data={data}\r\n                onToggle={this.onToggle}\r\n            />\r\n        );\r\n    }\r\n}\r\n\r\nconst content = document.getElementById('content');\r\nReactDOM.render(<TreeExample/>, content);\r\n```\r\n\r\n### Prop Values\r\n\r\n#### data\r\n`PropTypes.oneOfType([PropTypes.object,PropTypes.array]).isRequired`\r\n\r\nData that drives the tree view. State-driven effects can be built by manipulating the attributes in this object. Also supports an array for multiple nodes at the root level. An example can be found in `example/data.js`\r\n\r\n#### onToggle\r\n`PropTypes.func`\r\n\r\nCallback function when a node is toggled / clicked. Passes 2 attributes: the data node and it's toggled boolean state.\r\n\r\n#### style\r\n`PropTypes.object`\r\n\r\nSets the treeview styling. Defaults to `src/themes/default`.\r\n\r\n#### animations\r\n`PropTypes.oneOfType([PropTypes.object, PropTypes.bool])`\r\n\r\nSets the treeview animations. Set to `false` if you want to turn off animations. See [velocity-react](https://github.com/twitter-fabric/velocity-react) for more details. Defaults to `src/themes/animations`.\r\n\r\n#### decorators\r\n`PropTypes.object`\r\n\r\nDecorates the treeview. Here you can use your own Container, Header, Toggle and Loading components. Defaults to `src/decorators`. See example below:\r\n\r\n```javascript\r\nconst decorators = {\r\n    Loading: (props) => {\r\n        return (\r\n            <div style={props.style}>\r\n                loading...\r\n            </div>\r\n        );\r\n    },\r\n    Toggle: (props) => {\r\n        return (\r\n            <div style={props.style}>\r\n                <svg height={props.height} width={props.width}>\r\n                    // Vector Toggle Here\r\n                </svg>\r\n            </div>\r\n        );\r\n    },\r\n    Header: (props) => {\r\n        return (\r\n            <div style={props.style}>\r\n                {props.node.name}\r\n            </div>\r\n        );\r\n    },\r\n    Container: (props) => {\r\n        return (\r\n            <div onClick={this.props.onClick}>\r\n                // Hide Toggle When Terminal Here\r\n                <this.props.decorators.Toggle/>\r\n                <this.props.decorators.Header/>\r\n            </div>\r\n        );\r\n    }\r\n};\r\n\r\n<Treebeard data={...} decorators={decorators}/>\r\n```\r\n\r\n### Data Attributes\r\n\r\n```javascript\r\n{\r\n    id: '[optional] string',\r\n    name: 'string',\r\n    children: '[optional] array',\r\n    toggled: '[optional] boolean',\r\n    active: '[optional] boolean',\r\n    loading: '[optional] boolean',\r\n    decorators: '[optional] object',\r\n    animations: '[optional] object'\r\n},\r\n```\r\n#### id\r\nThe component key. If not defined, an auto-generated index is used.\r\n\r\n#### name\r\nThe name prop passed into the Header component.\r\n\r\n#### children\r\nThe children attached to the node. This value populates the subtree at the specific node. Each child is built from the same basic data structure. Tip: Make this an empty array, if you want to asynchronously load a potential parent.\r\n\r\n#### toggled\r\nToggled flag. Sets the visibility of a node's children. It also sets the state for the toggle decorator.\r\n\r\n#### active\r\nActive flag. If active, the node will be highlighted. The highlight is derived from the `node.activeLink` style object in the theme.\r\n\r\n#### loading\r\nLoading flag. It will populate the treeview with the loading component. Useful when asynchronously pulling the data into the treeview.\r\n\r\n#### decorators / animations\r\nAttach specific decorators / animations to a node. Provides the low level functionality to create visuals on a node-by-node basis. These structures are the same as the top level props, described above.\r\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexcurtis/react-treebeard.git"
+  },
+  "scripts": {
+    "babel": "rimraf lib && babel src/ -d lib/",
+    "example": "webpack-dev-server --content-base ./example/ --config ./example/webpack.config.js",
+    "lib": "npm run babel",
+    "prepublish": "npm run lib",
+    "test": "karma start karma.conf.js",
+    "test-travis": "karma start --browsers Firefox --single-run"
+  },
+  "version": "2.1.0"
 }
