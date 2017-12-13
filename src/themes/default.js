@@ -18,11 +18,19 @@ export default {
             link: {
                 cursor: 'pointer',
                 position: 'relative',
-                padding: '0px 5px',
-                display: 'block'
+                padding: '1px 6px',
+                display: 'block',
+                boxSizing: 'border-box'
             },
             activeLink: {
                 background: '#31363F'
+            },
+            highlightedLink: {
+                background: '#20a8d8'
+            },
+            targetedLink: {
+                border: 'solid 1px #20a8d8',
+                padding: '0px 5px',
             },
             toggle: {
                 base: {
