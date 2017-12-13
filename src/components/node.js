@@ -2,24 +2,98 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {VelocityTransitionGroup} from 'velocity-react';
+import { VelocityTransitionGroup } from 'velocity-react';
 
 import NodeHeader from './header';
 
 class TreeNode extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
-        this.onClick = this.onClick.bind(this);
+        this.state = {
+            dragging: false,
+            target: false,
+            timeout: null
+        }
     }
 
-    onClick(e) {
+    onClick = (e) => {
+        const {timeout} = this.state;
+
+        if (!timeout) {
+            this.setState({
+                timeout: setTimeout(() => {
+                    this.handleClick(e);
+                    this.setState({
+                        timeout: null
+                    });
+                }, 350)
+            });
+        } else {
+            clearTimeout(timeout);
+            this.setState({
+                timeout: null
+            });
+            this.handleDoubleClick(e);
+        }
+    }
+
+    handleClick = (e) => {
         const {node, onToggle} = this.props;
         const {toggled} = node;
 
         if (onToggle) {
             onToggle(node, !toggled, e);
         }
+    }
+
+    handleDoubleClick = (e) => {
+        const {node, onSelectNode} = this.props;
+        if (onSelectNode) {
+            onSelectNode(node, e);
+        }
+    }
+
+    handleStart = (e, data) => {
+        const {node, handleStart} = this.props;
+        this.setState({
+            dragging: true
+        });
+        handleStart(node, data);
+    }
+
+    handleDrag = (e, data) => {
+        //const {handleDrag} = this.props;
+    }
+
+    handleStop = (e, data) => {
+        const {node, handleStop} = this.props;
+        this.setState({
+            dragging: false
+        });
+        handleStop(node, data);
+    }
+
+    onMouseOver = (e) => {
+        e.stopPropagation();
+        const {node, draggingtree, onMouseOver} = this.props;
+        if (draggingtree) {
+            onMouseOver(node);
+            this.setState({
+                target: true
+            });
+        }
+    }
+
+    onMouseOut = (e) => {
+        e.stopPropagation();
+        const {node, draggingtree, onMouseOut} = this.props;
+        if (draggingtree) {
+            onMouseOut(node);
+        }
+        this.setState({
+            target: false
+        });
     }
 
     animations() {
@@ -44,9 +118,9 @@ class TreeNode extends React.Component {
         return Object.assign({}, decorators, nodeDecorators);
     }
 
-    onContextMenu=(e, node)=>{
-        const { onContextMenu } = this.props;
-        if(!!onContextMenu){
+    onContextMenu = (e, node) => {
+        const {onContextMenu} = this.props;
+        if (!!onContextMenu) {
             e.preventDefault();
             e.stopPropagation();
             onContextMenu(e, node);
@@ -89,6 +163,7 @@ class TreeNode extends React.Component {
 
     renderHeader(decorators, animations) {
         const {node, style} = this.props;
+        const {dragging, target} = this.state;
 
         return (
             <NodeHeader animations={animations}
@@ -96,12 +171,20 @@ class TreeNode extends React.Component {
                         onContextMenu={this.onContextMenu}
                         node={Object.assign({}, node)}
                         onClick={this.onClick}
+                        onMouseOver={this.onMouseOver}
+                        onMouseOut={this.onMouseOut}
+                        handleStart={this.handleStart}
+                        handleDrag={this.handleDrag}
+                        handleStop={this.handleStop}
+                        highlighted={dragging}
+                        targeted={target}
                         style={style}/>
         );
     }
 
     renderChildren(decorators) {
-        const {animations, decorators: propDecorators, node, style, onContextMenu} = this.props;
+        const {animations, decorators: propDecorators, node, style, draggingtree} = this.props;
+        const {dragging} = this.state;
 
         if (node.loading) {
             return this.renderLoading(decorators);
@@ -117,7 +200,8 @@ class TreeNode extends React.Component {
                 ref={ref => this.subtreeRef = ref}>
                 {children.map((child, index) => <TreeNode {...this._eventBubbles()}
                                                           animations={animations}
-                                                          onContextMenu={onContextMenu}
+                                                          highlighted={dragging}
+                                                          draggingtree={draggingtree}
                                                           decorators={propDecorators}
                                                           key={child.id || index}
                                                           node={child}
@@ -140,10 +224,17 @@ class TreeNode extends React.Component {
     }
 
     _eventBubbles() {
-        const {onToggle} = this.props;
+        const {onToggle, onSelectNode, onContextMenu, handleStart, handleDrag, handleStop, onMouseOver, onMouseOut} = this.props;
 
         return {
-            onToggle
+            onToggle,
+            onSelectNode,
+            onContextMenu,
+            onMouseOver,
+            onMouseOut,
+            handleStart,
+            handleDrag,
+            handleStop
         };
     }
 }
@@ -157,6 +248,7 @@ TreeNode.propTypes = {
         PropTypes.bool
     ]).isRequired,
     onToggle: PropTypes.func,
+    onSelectNode: PropTypes.func,
     onContextMenu: PropTypes.func
 };
 
