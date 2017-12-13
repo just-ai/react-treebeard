@@ -3,7 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Radium from 'radium';
-import {VelocityComponent} from 'velocity-react';
+import { VelocityComponent } from 'velocity-react';
+import Draggable, { DraggableCore } from 'react-draggable';
 
 const Loading = ({style}) => {
     return <div style={style}>loading...</div>;
@@ -49,23 +50,35 @@ Header.propTypes = {
 @Radium
 class Container extends React.Component {
     render() {
-        const {style, decorators, terminal, onClick, node } = this.props;
+        const {style, decorators, terminal, onClick, node, handleStart, handleDrag, handleStop, onMouseOver, onMouseOut, highlighted} = this.props;
 
         return (
-            <div onClick={onClick}
-                 onContextMenu={this.onContextMenu}
-                 ref={ref => this.clickableRef = ref}
-                 style={style.container}>
-                {!terminal ? this.renderToggle() : null}
+            <Draggable
+                axis="y"
+                handle=".draggable"
+                position={{x: 0, y: 0}}
+                bounds=".treebeard"
+                onStart={handleStart}
+                onDrag={handleDrag}
+                onStop={handleStop}>
+                <div className={highlighted ? "highlighted draggable" : "draggable"}
+                     onClick={onClick}
+                     onContextMenu={this.onContextMenu}
+                     onMouseOver={onMouseOver}
+                     onMouseOut={onMouseOut}
+                     ref={ref => this.clickableRef = ref}
+                     style={style.container}>
+                    {!terminal ? this.renderToggle() : null}
 
-                <decorators.Header node={node}
-                                   style={style.header}/>
-            </div>
+                    <decorators.Header node={node}
+                                       style={style.header}/>
+                </div>
+            </Draggable>
         );
     }
 
-    onContextMenu=(e)=>{
-        const { onContextMenu, node } = this.props;
+    onContextMenu = (e) => {
+        const {onContextMenu, node} = this.props;
         onContextMenu(e, node);
     };
 
