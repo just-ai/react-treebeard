@@ -3,54 +3,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { VelocityTransitionGroup } from 'velocity-react';
+import { merge } from 'lodash';
 
 import NodeHeader from './header';
 
 class TreeNode extends React.Component {
+    timeout = null;
+
     constructor(props) {
         super(props);
 
         this.state = {
             dragging: false,
-            target: false,
-            timeout: null
+            target: false
         }
     }
 
     onClick = (e) => {
-        const {timeout} = this.state;
-
-        if (!timeout) {
-            this.setState({
-                timeout: setTimeout(() => {
-                    this.handleClick(e);
-                    this.setState({
-                        timeout: null
-                    });
-                }, 350)
-            });
+        const target = e.target;
+        if (!this.timeout) {
+            this.timeout = setTimeout(() => {
+                this.handleClick(target);
+                this.timeout = null;
+            }, 300);
         } else {
-            clearTimeout(timeout);
-            this.setState({
-                timeout: null
-            });
-            this.handleDoubleClick(e);
+            clearTimeout(this.timeout);
+            this.timeout = null;
+            this.handleDoubleClick(target);
         }
     }
 
-    handleClick = (e) => {
+    handleClick = (target) => {
         const {node, onToggle} = this.props;
         const {toggled} = node;
 
         if (onToggle) {
-            onToggle(node, !toggled, e);
+            onToggle(node, !toggled, target);
         }
     }
 
-    handleDoubleClick = (e) => {
+    handleDoubleClick = (target) => {
         const {node, onSelectNode} = this.props;
         if (onSelectNode) {
-            onSelectNode(node, e);
+            onSelectNode(node, target);
         }
     }
 
