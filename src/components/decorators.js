@@ -20,7 +20,7 @@ const Toggle = ({style}) => {
 
     return (
         <div style={style.base}>
-            <div style={style.wrapper}>
+            <div style={style.wrapper} className="treebeard-arrow">
                 <svg height={height} width={width}>
                     <polygon points={points}
                              style={style.arrow}/>
