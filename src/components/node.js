@@ -8,7 +8,6 @@ import { merge } from 'lodash';
 import NodeHeader from './header';
 
 class TreeNode extends React.Component {
-    timeout = null;
 
     constructor(props) {
         super(props);
@@ -20,32 +19,11 @@ class TreeNode extends React.Component {
     }
 
     onClick = (e) => {
-        const target = e.target;
-        if (!this.timeout) {
-            this.timeout = setTimeout(() => {
-                this.handleClick(target);
-                this.timeout = null;
-            }, 300);
-        } else {
-            clearTimeout(this.timeout);
-            this.timeout = null;
-            this.handleDoubleClick(target);
-        }
-    }
-
-    handleClick = (target) => {
         const {node, onToggle} = this.props;
         const {toggled} = node;
 
         if (onToggle) {
-            onToggle(node, !toggled, target);
-        }
-    }
-
-    handleDoubleClick = (target) => {
-        const {node, onSelectNode} = this.props;
-        if (onSelectNode) {
-            onSelectNode(node, target);
+            onToggle(node, !toggled, e);
         }
     }
 
@@ -219,11 +197,10 @@ class TreeNode extends React.Component {
     }
 
     _eventBubbles() {
-        const {onToggle, onSelectNode, onContextMenu, handleStart, handleDrag, handleStop, onMouseOver, onMouseOut} = this.props;
+        const {onToggle, onContextMenu, handleStart, handleDrag, handleStop, onMouseOver, onMouseOut} = this.props;
 
         return {
             onToggle,
-            onSelectNode,
             onContextMenu,
             onMouseOver,
             onMouseOut,
@@ -243,7 +220,6 @@ TreeNode.propTypes = {
         PropTypes.bool
     ]).isRequired,
     onToggle: PropTypes.func,
-    onSelectNode: PropTypes.func,
     onContextMenu: PropTypes.func
 };
 
