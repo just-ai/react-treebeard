@@ -20,7 +20,7 @@ class DemoTree extends PureComponent {
         const {cursor, data} = this.state;
 
         if (cursor) {
-            this.setState(() => ({cursor, active: false}));
+            cursor.active = false;
         }
 
         node.active = true;
