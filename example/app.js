@@ -20,7 +20,7 @@ class DemoTree extends PureComponent {
         const {cursor, data} = this.state;
 
         if (cursor) {
-            this.setState(() => ({cursor, active: false}));
+            cursor.active = false;
         }
 
         node.active = true;
@@ -62,6 +62,14 @@ class DemoTree extends PureComponent {
                     <Treebeard
                         data={data}
                         decorators={{...decorators, Header}}
+                        /*eslint-disable-next-line no-console */
+                        handleStart={(...args) => console.log('start', ...args)}
+                        /*eslint-disable-next-line no-console */
+                        handleDrag={(...args) => console.log('drag', ...args)}
+                        /*eslint-disable-next-line no-console */
+                        handleStop={(...args) => console.log('stop', ...args)}
+                        /*eslint-disable-next-line no-console */
+                        onContextMenu={(...args) => console.log('context-menu', ...args)}
                         onToggle={this.onToggle}
                     />
                 </Div>
