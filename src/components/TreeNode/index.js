@@ -15,12 +15,89 @@ const Li = styled('li', {
 })(({style}) => style);
 
 class TreeNode extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            dragging: false,
+            target: false,
+        };
+
+        this.onClick = this.onClick.bind(this);
+        this.handleStart = this.handleStart.bind(this);
+        this.handleDrag = this.handleDrag.bind(this);
+        this.handleStop = this.handleStop.bind(this);
+        this.onMouseOver = this.onMouseOver.bind(this);
+        this.onMouseOut = this.onMouseOut.bind(this);
+        this.onContextMenu = this.onContextMenu.bind(this);
+    }
+
     onClick() {
         const {node, onToggle} = this.props;
         const {toggled} = node;
         if (onToggle) {
             onToggle(node, !toggled);
         }
+    }
+
+    handleStart(_, data) {
+        const {node, handleStart} = this.props;
+        this.setState({ dragging: true });
+        if (handleStart) {
+            handleStart(node, data);
+            return true;
+        }
+    }
+
+    handleDrag(_, data) {
+        const {node, handleDrag} = this.props;
+        if (handleDrag) {
+            handleDrag(node, data);
+            return true;
+        }
+    }
+
+    handleStop(_, data) {
+        const {node, handleStop} = this.props;
+        this.setState({ dragging: false });
+        if (handleStop) {
+            handleStop(node, data);
+            return true;
+        }
+    }
+
+    onMouseOver(e) {
+        e.stopPropagation();
+        if (!this.props.draggingtree) return;
+
+        const {node, onMouseOver} = this.props;
+        this.setState({ target: true });
+        if (onMouseOver) {
+            onMouseOver(node);
+        }
+    }
+
+    onMouseOut(e) {
+        e.stopPropagation();
+        this.setState({
+            target: false
+        });
+        if (!this.props.draggingtree) return;
+
+        const {node, onMouseOut} = this.props;
+        if (onMouseOut) {
+            onMouseOut(node);
+        }
+    }
+
+    onContextMenu(e, node) {
+        const {onContextMenu} = this.props;
+        if (onContextMenu) {
+            e.preventDefault();
+            e.stopPropagation();
+            onContextMenu(e, node);
+        }
+        return false;
     }
 
     animations() {
@@ -45,7 +122,10 @@ class TreeNode extends PureComponent {
     }
 
     renderChildren(decorators) {
-        const {animations, decorators: propDecorators, node, style, onToggle} = this.props;
+        const {animations, decorators: propDecorators, node, style, onToggle, draggingtree,
+            handleStart, handleDrag, handleStop,
+            onMouseOver, onMouseOut, onContextMenu} = this.props;
+        const {dragging} = this.state;
 
         if (node.loading) {
             return (
@@ -62,7 +142,11 @@ class TreeNode extends PureComponent {
             <Ul style={style.subtree}>
                 {children.map(child => (
                     <TreeNode
-                        {...{onToggle, animations, style}}
+                        {...{onToggle, animations, style,
+                            handleStart, handleDrag, handleStop,
+                            onMouseOver, onMouseOut, onContextMenu}}
+                        highlighted={dragging}
+                        draggingtree={draggingtree}
                         decorators={propDecorators}
                         key={child.id || randomString()}
                         node={child}
@@ -73,15 +157,27 @@ class TreeNode extends PureComponent {
     }
 
     render() {
-        const {node, style} = this.props;
+        const {node, style, highlighted, draggingtree} = this.props;
+        const {dragging, target} = this.state;
         const decorators = this.decorators();
         const animations = this.animations();
         const {...restAnimationInfo} = animations.drawer;
         return (
             <Li style={style.base}>
-                <NodeHeader {...{decorators, animations, node, style}} onClick={() => this.onClick()}/>
+                <NodeHeader
+                    {...{decorators, animations, node, style}}
+                    onClick={this.onClick}
+                    handleStart={this.handleStart}
+                    handleDrag={this.handleDrag}
+                    handleStop={this.handleStop}
+                    onMouseOver={this.onMouseOver}
+                    onMouseOut={this.onMouseOut}
+                    onContextMenu={this.onContextMenu}
+                    highlighted={highlighted || dragging}
+                    targeted={target}
+                />
                 <Drawer restAnimationInfo={{...restAnimationInfo}}>
-                    {node.toggled ? this.renderChildren(decorators, animations) : null}
+                    {node.toggled ? this.renderChildren(decorators, animations, draggingtree) : null}
                 </Drawer>
             </Li>
         );
@@ -90,6 +186,14 @@ class TreeNode extends PureComponent {
 
 TreeNode.propTypes = {
     onToggle: PropTypes.func,
+    onMouseOver: PropTypes.func,
+    onMouseOut: PropTypes.func,
+    onContextMenu: PropTypes.func,
+    handleStart: PropTypes.func,
+    handleDrag: PropTypes.func,
+    handleStop: PropTypes.func,
+    draggingtree: PropTypes.bool,
+    highlighted: PropTypes.bool,
     style: PropTypes.object.isRequired,
     node: PropTypes.object.isRequired,
     decorators: PropTypes.object.isRequired,

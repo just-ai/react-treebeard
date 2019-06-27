@@ -24,18 +24,23 @@ class NodeHeader extends Component {
     }
 
     render() {
-        const {animations, decorators, node, onClick, style} = this.props;
+        const {animations, decorators, node, onClick, style,
+            handleStart, handleDrag, handleStop,
+            onMouseOver, onMouseOut, onContextMenu,
+            highlighted, targeted} = this.props;
         const {active, children} = node;
         const terminal = !children;
-        let styles;
-        if (active) {
-            styles = Object.assign(style, {container: {...style.link, ...style.activeLink}});
-        } else {
-            styles = style;
-        }
+        let container = {...style.link};
+        if (active) container = {...container, ...style.activeLink};
+        if (highlighted) container = {...container, ...style.highlightedLink};
+        if (targeted) container = {...container, ...style.targetedLink};
+        const styles = Object.assign(style, {container});
         return (
             <decorators.Container
-                {...{animations, decorators, node, onClick, terminal}}
+                {...{animations, decorators, node, onClick, terminal,
+                    handleStart, handleDrag, handleStop,
+                    onMouseOver, onMouseOut, onContextMenu,
+                    highlighted}}
                 style={styles}
             />
         );
@@ -50,7 +55,15 @@ NodeHeader.propTypes = {
         PropTypes.bool
     ]).isRequired,
     node: PropTypes.object.isRequired,
-    onClick: PropTypes.func
+    highlighted: PropTypes.bool,
+    targeted: PropTypes.bool,
+    onClick: PropTypes.func,
+    onMouseOver: PropTypes.func,
+    onMouseOut: PropTypes.func,
+    onContextMenu: PropTypes.func,
+    handleStart: PropTypes.func,
+    handleDrag: PropTypes.func,
+    handleStop: PropTypes.func,
 };
 
 export default NodeHeader;
